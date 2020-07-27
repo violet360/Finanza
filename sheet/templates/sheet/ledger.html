@@ -1,0 +1,65 @@
+{% extends 'sheet/base.html' %}
+{% block content %}
+
+<h1 class="d-flex justify-content-center">Ledger</h1>
+    <br><br>
+    <form class="form-group" method="POST">
+     {% csrf_token %}
+    <div class ="row justify-content-md-center">
+    <div class="input-group mb-3 col col-lg-3">
+  <select class="custom-select" id="inputGroupSelect01" name="lender">
+    <option selected disabled>Choose lender</option>
+    {% for user in users %}
+    <option value="{{user}}">{{user}}</option>
+    {%endfor%}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+</div>
+<div class="input-group mb-3 col col-lg-3">
+  <select class="custom-select" id="inputGroupSelect02" name="borrower">
+    <option selected disabled>Choose borrower</option>
+    {% for user in users %}
+    <option value="{{user}}">{{user}}</option>
+    {%endfor%}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect02">Options</label>
+  </div>
+</div>
+ <div class="input-group mb-3 col col-lg-3">
+    <input type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter the amount" name="amount">
+  </div>
+  </div>
+  <br>
+  <div class="d-flex justify-content-center">
+ <button type="submit" class="btn btn-primary mb-2">Confirm Submit</button>
+ </div>
+</form>
+<br> <br>
+<center>{{ money }}</center>
+<br><br><br>
+<div class="row justify-content-center"> 
+<table class="table col-lg-8 table-hover ">
+    <thread>
+        <th scope="col">#</th> 
+      <th scope="col">Lender</th>
+      <th scope="col">Borrower</th>
+      <th scope="col">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for l in ledgers %}
+        <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{l.lender|capfirst}}</td>
+      <td>{{l.borrower|capfirst}}</td>
+      <td>{{l.amount}}</td>
+    </tr>
+    {% endfor %}
+
+{% endblock %}
+
+
+
