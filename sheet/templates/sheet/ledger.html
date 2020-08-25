@@ -43,6 +43,7 @@
       <td>{{l.amount}}</td>
       <td>{{l.desc}}</td>
       <td>{{l.grp}}</td>
+      <td><a href="{% url 'sheet:go' pk=l.pk %}">delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

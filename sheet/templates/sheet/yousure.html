@@ -1,0 +1,10 @@
+{% extends 'sheet/base.html' %}
+{% block content %}
+
+are you sure?
+<a href="{% url 'sheet:transaction_del' pk=obj.pk %}">yes</a>
+<a href="{% url 'sheet:ledger_sheet' %}">no</a>
+
+
+
+{% endblock %}

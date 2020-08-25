@@ -10,7 +10,6 @@
       <th scope="col">Borrower</th>
       <th scope="col">Amount</th>
       <th scope="col">desc</th>
-      <th scope="col">group</th>
   </thread>
   <tbody>
     {% for l in transactions %}
@@ -20,6 +19,7 @@
       <td>{{l.borrower|capfirst}}</td>
       <td>{{l.amount}}</td>
       <td>{{l.desc}}</td>
+      <td><a href="{% url 'sheet:go' pk=l.pk %}">delete</a></td>
 	</tr>
     {% endfor %}
   </tbody>
