@@ -1,6 +1,11 @@
 {% extends 'sheet/base.html' %}
 {% block content %}
 
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'sheet:ledger_sheet' %}">Ledger</a>
+  </nav>
+</div>
 
 <div class="row justify-content-center"> 
 <table class="table col-lg-8 table-hover ">
@@ -19,7 +24,7 @@
       <td>{{l.borrower|capfirst}}</td>
       <td>{{l.amount}}</td>
       <td>{{l.desc}}</td>
-      <td><a href="{% url 'sheet:go' pk=l.pk %}">delete</a></td>
+<td id="dustbin"><a href="{% url 'sheet:go' pk=l.pk %}"><i class="fa fa-trash-o" style="font-size: 24px; color: rgba(134, 134, 134,0.4);"></i></a></td>
 	</tr>
     {% endfor %}
   </tbody>

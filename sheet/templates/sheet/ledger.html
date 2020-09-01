@@ -1,14 +1,105 @@
 {% extends 'sheet/base.html' %}
 {% block content %}
 
-<h1 class="d-flex justify-content-center">Ledger</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'sheet:ledger_sheet' %}"><h1 class="d-flex justify-content-center">Ledger</h1></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Groups 
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {% for grp in grps %}
+            <a class="dropdown-item" href="{% url 'sheet:grp_view' pk=grp.pk %}">{{ grp.grp_name }}</a>
+          {% endfor %}
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a style="text-decoration:none" id = "get_out" href="/login">Logout</a></button>
+    </form>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
     <br><br>
 
 
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+
+
+
+
+<form class="form-group" method="POST">
+     {% csrf_token %}
+    <div class ="row justify-content-md-center">
+    <div class="input-group mb-3 col col-lg-3">
+  <select class="custom-select" id="inputGroupSelect01" name="lender">
+    <option selected disabled>Choose lender</option>
+    {% for user in users %}
+    <option value="{{user}}">{{user}}</option>
+    {%endfor%}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+</div>
+<div class="input-group mb-3 col col-lg-3">
+  <select class="custom-select" id="inputGroupSelect02" name="borrower">
+    <option selected disabled>Choose borrower</option>
+    {% for user in users %}
+    <option value="{{user}}">{{user}}</option>
+    {%endfor%}
+  </select>
+  <div class="input-group-append">
+    <label class="input-group-text" for="inputGroupSelect02">Options</label>
+  </div>
+</div>
+  <div class="input-group mb-3 col col-lg-3">
+    <input type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter the amount" name="amount">
+  </div>
+  </div>
+  <center>
+  <div class="input-group mb-3 col col-lg-3">
+    <input type="text" class="form-control" id="formGroupExampleInput1" placeholder="Add description" name="desc">
+  </div>
+  </center>
+
+<center>
+  <div class="input-group mb-3 col col-lg-3">
+    <input type="text" class="form-control" id="formGroupExampleInput1" placeholder="Add Group" name="grp">
+  </div>
+  </center>
+
+  <br>
+  <div class="d-flex justify-content-center">
+ <button id = "enter_button" type="submit" class="btn btn-primary mb-2">Confirm Submit</button>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -17,24 +108,22 @@
 <br><br><br>
 
 
-{% for grp in grps %}
-
-  <a href = "{% url 'sheet:grp_view' pk=grp.pk %}"> {{ grp.grp_name }} </a>
-
-{% endfor %}
 
 
-<div class="row justify-content-center"> 
-<table class="table col-lg-8 table-hover ">
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+  <table class="table table-bordered table-striped mb-0">
     <thread>
+      <tr>
         <th scope="col">#</th> 
       <th scope="col">Lender</th>
       <th scope="col">Borrower</th>
       <th scope="col">Amount</th>
       <th scope="col">desc</th>
       <th scope="col">group</th>
+    </tr>
   </thread>
-  <tbody>
+    <tbody>
     {% for l in ledgers %}
         <tr>
       <th scope="row">{{ forloop.counter }}</th>
@@ -43,12 +132,16 @@
       <td>{{l.amount}}</td>
       <td>{{l.desc}}</td>
       <td>{{l.grp}}</td>
-      <td><a href="{% url 'sheet:go' pk=l.pk %}">delete</a></td>
+
+<td id="dustbin"><a href="{% url 'sheet:go' pk=l.pk %}"><i class="fa fa-trash-o" style="font-size: 24px; color: rgba(134, 134, 134,0.4);"></i></a></td>
     </tr>
     {% endfor %}
   </tbody>
-</table>
+  </table>
+
 </div>
+
+
 
 
 {% endblock %}
